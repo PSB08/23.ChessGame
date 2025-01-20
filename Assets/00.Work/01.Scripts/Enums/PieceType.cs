@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardLayout : MonoBehaviour
+public enum PieceType
 {
-
+    Pawn, Bishop, Knight, Rook, Queen, King
 }
