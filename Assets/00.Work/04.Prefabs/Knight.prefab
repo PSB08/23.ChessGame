@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 464390}
   - component: {fileID: 3304258}
   - component: {fileID: 2374884}
-  - component: {fileID: -1667827170270401241}
   - component: {fileID: -1759736172992681874}
   - component: {fileID: 2480862700560578697}
+  - component: {fileID: 5030256856127275538}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -86,18 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-1667827170270401241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae67604e751875141be6cc6fbbaf2084, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-1759736172992681874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,3 +111,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableMoves: []
+--- !u!114 &5030256856127275538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c7f5bdf41643f04db064176b52b5a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
