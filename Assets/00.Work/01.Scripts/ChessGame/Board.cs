@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    [SerializeField] private Transform bottomLefSquareTransform;
+    [SerializeField] private Transform bottomLeftSquareTransform;
     [SerializeField] private float squareSize;
 
     private Piece[,] grid;
@@ -31,13 +31,13 @@ public class Board : MonoBehaviour
 
     public Vector3 CalculatedPositionFromCoords(Vector2Int coords)
     {
-        return bottomLefSquareTransform.position + new Vector3(coords.x * squareSize, 0f, coords.y * squareSize);
+        return bottomLeftSquareTransform.position + new Vector3(coords.x * squareSize, 0f, coords.y * squareSize);
     }
 
     private Vector2Int CalculateCoordsFromPosition(Vector3 inputPosition)
     {
         int x = Mathf.FloorToInt(transform.InverseTransformPoint(inputPosition).x / squareSize) + BOARD_SIZE / 2;
-        int y = Mathf.FloorToInt(transform.InverseTransformPoint(inputPosition).y / squareSize) + BOARD_SIZE / 2;
+        int y = Mathf.FloorToInt(transform.InverseTransformPoint(inputPosition).z / squareSize) + BOARD_SIZE / 2;
         return new Vector2Int(x, y);
     }
 
@@ -61,24 +61,16 @@ public class Board : MonoBehaviour
         if (selectedPiece)
         {
             if (piece != null && selectedPiece == piece)
-            {
                 DeselectPiece();
-            }
             else if (piece != null && selectedPiece != piece && chessController.IsTeamTurnActive(piece.team))
-            {
                 SelectPiece(piece);
-            }
             else if (selectedPiece.CanMoveTo(coords))
-            {
                 OnSelectPieceMoved(coords, selectedPiece);
-            }
         }
         else
         {
             if (piece != null && chessController.IsTeamTurnActive(piece.team))
-            {
                 SelectPiece(piece);
-            }
         }
     }
 
@@ -114,18 +106,23 @@ public class Board : MonoBehaviour
     private Piece GetPieceOnSquare(Vector2Int coords)
     {
         if (CheckIfCoordinatedAreOnBoard(coords))
-        {
             return grid[coords.x, coords.y];
-        }
         return null;
     }
 
     private bool CheckIfCoordinatedAreOnBoard(Vector2Int coords)
     {
-        if (coords.x < 0 || coords.y < 0 || coords.x >= BOARD_SIZE || coords.y > -BOARD_SIZE)
-        {
+        if (coords.x < 0 || coords.y < 0 || coords.x >= BOARD_SIZE || coords.y >= BOARD_SIZE)
             return false;
-        }
         return true;
     }
+
+    public void SetPieceOnBoard(Vector2Int coords, Piece newPiece)
+    {
+        if (CheckIfCoordinatedAreOnBoard(coords))
+            grid[coords.x, coords.y] = newPiece;
+    }
+
+
+
 }
