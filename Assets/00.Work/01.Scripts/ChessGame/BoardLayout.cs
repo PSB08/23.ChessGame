@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Board/Layout")]
-public class BoardLayout : MonoBehaviour
+public class BoardLayout : ScriptableObject
 {
     [Serializable]
     private class BoardSquareSetup
@@ -22,7 +21,7 @@ public class BoardLayout : MonoBehaviour
         return boardSquares.Length;
     }
 
-    public Vector2Int GetSquareCoordsAtIndes(int index)
+    public Vector2Int GetSquareCoordsAtIndex(int index)
     {
         if (boardSquares.Length < index)
         {
@@ -32,7 +31,7 @@ public class BoardLayout : MonoBehaviour
         return new Vector2Int(boardSquares[index].position.x - 1, boardSquares[index].position.y - 1);
     }
 
-    public string GetSquarePieceNameAtIndes(int index)
+    public string GetSquarePieceNameAtIndex(int index)
     {
         if (boardSquares.Length < index)
         {
