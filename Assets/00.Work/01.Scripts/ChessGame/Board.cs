@@ -103,14 +103,14 @@ public class Board : MonoBehaviour
         selectedPiece = null;
     }
 
-    private Piece GetPieceOnSquare(Vector2Int coords)
+    public Piece GetPieceOnSquare(Vector2Int coords)
     {
         if (CheckIfCoordinatedAreOnBoard(coords))
             return grid[coords.x, coords.y];
         return null;
     }
 
-    private bool CheckIfCoordinatedAreOnBoard(Vector2Int coords)
+    public bool CheckIfCoordinatedAreOnBoard(Vector2Int coords)
     {
         if (coords.x < 0 || coords.y < 0 || coords.x >= BOARD_SIZE || coords.y >= BOARD_SIZE)
             return false;

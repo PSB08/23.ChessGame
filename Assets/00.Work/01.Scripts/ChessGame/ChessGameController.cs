@@ -71,6 +71,7 @@ public class ChessGameController : MonoBehaviour
         currentPlayer.AddPiece(newPiece);
     }
 
+
     private void GenerateAllPossiblePlayerMoves(ChessPlayer player)
     {
         player.GenerateAllPossibleMoves();
