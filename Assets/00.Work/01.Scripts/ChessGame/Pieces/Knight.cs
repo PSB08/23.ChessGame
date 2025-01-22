@@ -12,7 +12,6 @@ public class Knight : Piece
         new Vector2Int(1, -2),
         new Vector2Int(-2, 1),
         new Vector2Int(-2, -1),
-        new Vector2Int(2, 1),
         new Vector2Int(-1, 2),
         new Vector2Int(-1, -2),
     };
