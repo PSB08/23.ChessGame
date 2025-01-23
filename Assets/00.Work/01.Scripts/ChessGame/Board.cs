@@ -162,6 +162,16 @@ public class Board : MonoBehaviour
             grid[coords.x, coords.y] = newPiece;
     }
 
+    internal void OnGameRestarted()
+    {
+        selectedPiece = null;
+        CreateGrid();
+    }
+    public void PromotePiece(Piece piece)
+    {
+        TakePiece(piece);
+        chessController.CreatePieceAndInitialize(piece.occupiedSquare, piece.team, typeof(Queen));
+    }
 
 
 }

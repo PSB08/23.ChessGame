@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(IObjectTweener))]
+[RequireComponent(typeof(LineTweener))]
 [RequireComponent(typeof(MaterialSetter))]
 public abstract class Piece : MonoBehaviour
 {
@@ -78,5 +78,23 @@ public abstract class Piece : MonoBehaviour
         return false;
     }
 
+    protected Piece GetPieceInDirection<T>(TeamColor team, Vector2Int direction) where T : Piece
+    {
+        for (int i = 0; i <= Board.BOARD_SIZE; i++)
+        {
+            Vector2Int nextCoords = occupiedSquare + direction * i;
+            Piece piece = board.GetPieceOnSquare(nextCoords);
+            if (!board.CheckIfCoordinatedAreOnBoard(nextCoords))
+                return null;
+            if (piece != null)
+            {
+                if (piece.team != team || !(piece is T))
+                    return null;
+                else if (piece.team == team && piece is T)
+                    return piece;
+            }    
+        }
+        return null;
+    }
 
 }

@@ -101,5 +101,8 @@ public class ChessPlayer
         return false;
     }
 
-
+    internal void OnGameRestarted()
+    {
+        activePieces.Clear();
+    }
 }
