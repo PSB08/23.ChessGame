@@ -63,7 +63,7 @@ public abstract class Board : MonoBehaviour
 
     public void OnSquareSelected(Vector3 inputPosition)
     {
-        if (!chessController.CanPerformMove())
+        if (!chessController || !chessController.CanPerformMove())
             return;
         Vector2Int coords = CalculateCoordsFromPosition(inputPosition);
         Piece piece = GetPieceOnSquare(coords);
@@ -181,7 +181,7 @@ public abstract class Board : MonoBehaviour
     public void PromotePiece(Piece piece)
     {
         TakePiece(piece);
-        chessController.CreatePieceAndInitialize(piece.occupiedSquare, piece.team, typeof(Queen));
+        //chessController.CreatePieceAndInitialize(piece.occupiedSquare, piece.team, typeof(Queen));
     }
 
 

@@ -32,6 +32,7 @@ public class MultiPlayerBoard : Board
         OnSelectPieceMoved(intCoords);
     }
 
+    [PunRPC]
     public void RPC_SetSelectedPiece(Vector2 coords)
     {
         Vector2Int intCoords = new Vector2Int(Mathf.RoundToInt(coords.x), Mathf.RoundToInt(coords.y));

@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -867,6 +867,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573f0d77ff5e345438a8de392ffc03de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  singlePlayerChessGameController: {fileID: 2226015591213671137, guid: 38da1a2b673e5d7439ddd2cd1e263404, type: 3}
+  multiPlayerChessGameController: {fileID: 3150745655047529044, guid: cfb068ffdfd0e054ba602df9c46cca33, type: 3}
+  singlePlayerBoard: {fileID: 3673503261939343120, guid: 1aff9e32d2d9fb14b88cdc48f80bf674, type: 3}
+  multiPlayerBoard: {fileID: 7544512994205078081, guid: 9f9799a50a78aed4c90fc9cb794eef1c, type: 3}
+  networkManager: {fileID: 1059857051}
+  chessUIManager: {fileID: 1311427334}
+  boardAnchor: {fileID: 1523810305}
+  cameraSetup: {fileID: 1813658720}
 --- !u!1 &803871534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,6 +1295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1311427334}
+  gameInitializer: {fileID: 719577761}
 --- !u!1 &1082046284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,9 +1622,33 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 719577761}
+        m_TargetAssemblyTypeName: GameInitializer, Assembly-CSharp
+        m_MethodName: CreateSinglePlayerBoard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1311427334}
         m_TargetAssemblyTypeName: ChessUIManager, Assembly-CSharp
         m_MethodName: OnSingleplayerModeSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 719577761}
+        m_TargetAssemblyTypeName: GameInitializer, Assembly-CSharp
+        m_MethodName: InitializeSInglePlayerController
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2073,7 +2106,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Chess!
 --- !u!222 &1327079160
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2836,6 +2869,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790838502}
   m_CullTransparentMesh: 1
+--- !u!1 &1813658718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1813658719}
+  - component: {fileID: 1813658720}
+  m_Layer: 0
+  m_Name: CameraSetup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1813658719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813658718}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1813658720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813658718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793677776e8ccf048843110c6b8a20cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 77089074}
 --- !u!1 &1818418615
 GameObject:
   m_ObjectHideFlags: 0
@@ -3997,3 +4075,4 @@ SceneRoots:
   - {fileID: 196624689}
   - {fileID: 77168015}
   - {fileID: 719577760}
+  - {fileID: 1813658719}

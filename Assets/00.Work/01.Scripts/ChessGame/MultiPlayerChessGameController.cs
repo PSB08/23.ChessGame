@@ -1,10 +1,6 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class MultiPlayerChessGameController : ChessGameController, IOnEventCallback
 {
@@ -30,7 +26,7 @@ public class MultiPlayerChessGameController : ChessGameController, IOnEventCallb
 
     public override bool CanPerformMove()
     {
-        if (IsGameInProgress() || !ILocalPlayersTurn())
+        if (!IsGameInProgress() || !ILocalPlayersTurn())
             return false;
         return true;
     }
@@ -57,7 +53,7 @@ public class MultiPlayerChessGameController : ChessGameController, IOnEventCallb
     {
         object[] content = new object[] { (int)state };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(SET_GAME_STATE_EVENT_CODE, content, raiseEventOptions,SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(SET_GAME_STATE_EVENT_CODE, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     public void OnEvent(EventData photonEvent)

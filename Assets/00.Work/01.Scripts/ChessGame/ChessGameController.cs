@@ -13,6 +13,7 @@ public abstract class ChessGameController : MonoBehaviour
     [SerializeField] private BoardLayout startingBoardLayout;
     private Board board;
     private ChessUIManager uiManager;
+    private CameraSetup cameraSetup;
 
     private PieceCreator pieceCreator;
     protected ChessPlayer whitePlayer;
@@ -23,11 +24,6 @@ public abstract class ChessGameController : MonoBehaviour
     protected abstract void SetGameState(GameState state);
     public abstract void TryToStartCurrentGame();
     public abstract bool CanPerformMove();
-
-    private void Start()
-    {
-        StartNewGame();
-    }
 
     private void Awake()
     {
@@ -40,20 +36,26 @@ public abstract class ChessGameController : MonoBehaviour
         blackPlayer = new ChessPlayer(TeamColor.Black, board);
     }
 
-    public void SetDependencies(ChessUIManager uiManager, Board board)
+    public void SetDependencies(ChessUIManager uiManager, Board board, CameraSetup cameraSetup)
     {
         this.uiManager = uiManager;
         this.board = board;
+        this.cameraSetup = cameraSetup;
     }
 
-    private void StartNewGame()
+    public void StartNewGame()
     {
-        //uiManager.HideUI();
+        uiManager.OnGameStarted();
         SetGameState(GameState.Init);
         CreatePiecesFromLayout(startingBoardLayout);
         activePlayer = whitePlayer;
         GenerateAllPossiblePlayerMoves(activePlayer);
         TryToStartCurrentGame();
+    }
+
+    public void SetupCamera(TeamColor team)
+    {
+        cameraSetup.SetupCamera(team);
     }
 
     public void RestartGame()
@@ -78,7 +80,7 @@ public abstract class ChessGameController : MonoBehaviour
 
     private void CreatePiecesFromLayout(BoardLayout layout)
     {
-        for (int i = 0; i < layout.GetPiecesCount(); i++)
+        for (int i = 0; i < 32; i++)
         {
             Vector2Int squareCoords = layout.GetSquareCoordsAtIndex(i);
             TeamColor team = layout.GetSquareTeamColorAtIndex(i);
@@ -87,12 +89,12 @@ public abstract class ChessGameController : MonoBehaviour
             Type type = Type.GetType(typeName);
             CreatePieceAndInitialize(squareCoords, team, type);
         }
-
     }
 
     public void CreatePieceAndInitialize(Vector2Int squareCoords, TeamColor team, Type type)
     {
         Piece newPiece = pieceCreator.CreatePiece(type).GetComponent<Piece>();
+        Debug.Log($"Creating piece for {team} at {squareCoords}");
         newPiece.SetData(squareCoords, team, board);
 
         Material teamMaterial = pieceCreator.GetTeamMaterial(team);
@@ -151,7 +153,7 @@ public abstract class ChessGameController : MonoBehaviour
 
     private void EndGame()
     {
-        //uiManager.OnGameFinished(activePlayer.team.ToString());
+        uiManager.OnGameFinished(activePlayer.team.ToString());
         Debug.Log("Game End");
         SetGameState(GameState.Finished);
     }

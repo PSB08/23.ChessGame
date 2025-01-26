@@ -87,4 +87,16 @@ public class ChessUIManager : MonoBehaviour
         buttonToDeactivate.interactable = false;
     }
 
+    public void OnGameStarted()
+    {
+        DisableAllScreens();
+        connectionStatusText.gameObject.SetActive(false);
+    }
+
+    internal void OnGameFinished(string winner)
+    {
+        gameoverScreen.SetActive(true);
+        resultText.text = string.Format("{0} won", winner);
+    }
+
 }

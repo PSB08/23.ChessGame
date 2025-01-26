@@ -10,6 +10,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private const int MAX_PLAYERS = 2;
 
     [SerializeField] private ChessUIManager uiManager;
+    [SerializeField] private GameInitializer gameInitializer;
     private MultiPlayerChessGameController chessGameController;
 
     private ChessLevel playerLevel;
@@ -64,6 +65,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log($"Player {PhotonNetwork.LocalPlayer.ActorNumber} joined the room with level {(ChessLevel)PhotonNetwork.CurrentRoom.CustomProperties[LEVEL]}");
+        gameInitializer.CreateMultiPlayerBoard();
         PrepareTeamSelectionOptions();
         uiManager.ShowTeamSelectionScreen();
     }
@@ -95,7 +97,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     internal void SelectTeam(int team)
     {
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { {TEAM, team} });
+        gameInitializer.InitializeMultiplayerController();
         chessGameController.SetLocalPlayer((TeamColor)team);
+        chessGameController.StartNewGame();
+        chessGameController.SetupCamera((TeamColor)team);
     }
 
     public bool IsRoomFull()

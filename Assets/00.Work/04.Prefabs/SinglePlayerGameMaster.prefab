@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9207930404511776484}
   - component: {fileID: 4473022313709028447}
-  - component: {fileID: 6333589285864062880}
+  - component: {fileID: 2226015591213671137}
   m_Layer: 0
   m_Name: SinglePlayerGameMaster
   m_TagString: Untagged
@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: 125018, guid: 9d3e9c36668dcfe44b524760a4c3a3b5, type: 3}
   blackMaterial: {fileID: 2100000, guid: 7509f7f6c1c0bca42b17112c9c2b0d50, type: 2}
   whiteMaterial: {fileID: 2100000, guid: 9207d558ddfa42d438b65b391ce875cb, type: 2}
---- !u!114 &6333589285864062880
+--- !u!114 &2226015591213671137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,5 +67,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingBoardLayout: {fileID: 11400000, guid: 2116bfebd696d194a81f21c18eae9dd8, type: 2}
-  board: {fileID: 0}
-  uiManager: {fileID: 0}

@@ -15,6 +15,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private ChessUIManager chessUIManager;
     [SerializeField] private Transform boardAnchor;
+    [SerializeField] private CameraSetup cameraSetup;
 
     public void CreateMultiPlayerBoard()
     {
@@ -32,14 +33,24 @@ public class GameInitializer : MonoBehaviour
     public void InitializeMultiplayerController()
     {
         MultiPlayerBoard board = FindObjectOfType<MultiPlayerBoard>();
+        MultiPlayerChessGameController controller = Instantiate(multiPlayerChessGameController);
+        controller.SetDependencies(chessUIManager, board, cameraSetup);
+        controller.CreatePlayers();
+        controller.SetMultiplayerDependencies(networkManager);
+        networkManager.SetDependencies(controller);
+        board.SetDependencies(controller);
+    }
+
+    public void InitializeSInglePlayerController()
+    {
+        SinglePlayerBoard board = FindObjectOfType<SinglePlayerBoard>();
         if (board)
         {
-            MultiPlayerChessGameController controller = Instantiate(multiPlayerChessGameController);
-            controller.SetDependencies(chessUIManager, board);
+            SinglePlayerChessGameController controller = Instantiate(singlePlayerChessGameController);
+            controller.SetDependencies(chessUIManager, board, cameraSetup);
             controller.CreatePlayers();
-            controller.SetMultiplayerDependencies(networkManager);
-            networkManager.SetDependencies(controller);
             board.SetDependencies(controller);
+            controller.StartNewGame();
         }
     }
 
