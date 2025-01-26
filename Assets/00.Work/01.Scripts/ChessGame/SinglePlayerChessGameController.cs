@@ -20,4 +20,6 @@ public class SinglePlayerChessGameController : ChessGameController
     {
         this.state = state;
     }
+
+
 }
