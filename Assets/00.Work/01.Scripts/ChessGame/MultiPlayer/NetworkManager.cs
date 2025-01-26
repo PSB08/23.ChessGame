@@ -7,6 +7,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private ChessUIManager uiManager;
 
+    private ChessLevel level;
 
     private void Update()
     {
