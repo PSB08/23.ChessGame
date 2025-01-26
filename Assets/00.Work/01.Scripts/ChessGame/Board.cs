@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SquareSelectorCreator))]
-public class Board : MonoBehaviour
+public abstract class Board : MonoBehaviour
 {
+    public const int BOARD_SIZE = 8;
+
     [SerializeField] private Transform bottomLeftSquareTransform;
     [SerializeField] private float squareSize;
 
@@ -14,7 +16,9 @@ public class Board : MonoBehaviour
     private ChessGameController chessController;
     private SquareSelectorCreator squareSelector;
 
-    public const int BOARD_SIZE = 8;
+    public abstract void SelectPieceMoved(Vector2 coords);
+    public abstract void SetSelectedPiece(Vector2 coords);
+
 
     private void Awake()
     {
@@ -68,24 +72,30 @@ public class Board : MonoBehaviour
             if (piece != null && selectedPiece == piece)
                 DeselectPiece();
             else if (piece != null && selectedPiece != piece && chessController.IsTeamTurnActive(piece.team))
-                SelectPiece(piece);
+                SelectPiece(coords);
             else if (selectedPiece.CanMoveTo(coords))
-                OnSelectPieceMoved(coords, selectedPiece);
+                SelectPieceMoved(coords);
         }
         else
         {
             if (piece != null && chessController.IsTeamTurnActive(piece.team))
-                SelectPiece(piece);
+                SelectPiece(coords);
         }
     }
 
-    private void OnSelectPieceMoved(Vector2Int coords, Piece piece)
+    public void OnSelectPieceMoved(Vector2Int coords)
     {
         TryToTakeOppositePiece(coords);
-        UpdateBoardOnPieceMove(coords, piece.occupiedSquare, piece, null);
+        UpdateBoardOnPieceMove(coords, selectedPiece.occupiedSquare, selectedPiece, null);
         selectedPiece.MovePiece(coords);
         DeselectPiece();
         EndTurn();
+    }
+
+    public void OnSetSelectedPiece(Vector2Int coords)
+    {
+        Piece piece = GetPieceOnSquare(coords);
+        selectedPiece = piece;
     }
 
     private void TryToTakeOppositePiece(Vector2Int coords)
@@ -115,10 +125,11 @@ public class Board : MonoBehaviour
         grid[newCoords.x, newCoords.y] = newPiece;
     }
 
-    private void SelectPiece(Piece piece)
+    private void SelectPiece(Vector2Int coords)
     {
+        Piece piece = GetPieceOnSquare(coords);
         chessController.RemoveMovesEnablingAttakOnPieceOfType<King>(piece);
-        selectedPiece = piece;
+        SetSelectedPiece(coords);
         List<Vector2Int> selection = selectedPiece.availableMoves;
         ShowSelectionSquare(selection);
     }
