@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,7 @@ public class ChessUIManager : MonoBehaviour
 
     private void Awake()
     {
+        gameLevelSelection.AddOptions(Enum.GetNames(typeof(ChessLevel)).ToList());
         OnGameLaunched();
     }
 
@@ -51,6 +53,7 @@ public class ChessUIManager : MonoBehaviour
 
     public void OnConnet()
     {
+        networkManager.SetPlayerLevel((ChessLevel)gameLevelSelection.value);
         networkManager.Connet();
     }
 
@@ -65,6 +68,23 @@ public class ChessUIManager : MonoBehaviour
     public void SetConnectionStatus(string status)
     {
         connectionStatusText.text = status;
+    }
+
+    public void ShowTeamSelectionScreen()
+    {
+        DisableAllScreens();
+        teamSelectionScreen.SetActive(true);
+    }
+
+    public void SelectTeam(int team)
+    {
+        networkManager.SelectTeam(team);
+    }
+
+    public void RestirctTeamChoice(TeamColor occupiedTeam)
+    {
+        var buttonToDeactivate = occupiedTeam == TeamColor.White ? whiteTeamButton : whiteTeamButton;
+        buttonToDeactivate.interactable = false;
     }
 
 }
